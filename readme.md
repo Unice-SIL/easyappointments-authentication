@@ -210,3 +210,6 @@ Class MyUser implements UserInterface {
 }
 ```
 This class will be used by Authentication controller to set user data in session.
+
+### REPORT AN ISSUE
+Send me an email to frederic.casazza@unice.fr
