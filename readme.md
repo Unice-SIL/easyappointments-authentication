@@ -4,7 +4,7 @@ This plugin modify the easyappointements authentication system. After installati
 By default BasicAuthentication and DbUserProvider is installed and used, but you can install or develop other authentications mode and users providers.
 
 ### DISCLAIMER
-I developed and tested this plugin with easyappointments 1.2.1, I can't guarantee it will work with an other version.
+I developed and tested this plugin with easyappointments 1.2.1, I can't guarantee it will work with another version.
 
 ### INSTALLATION
 Put files in your easyappointments directory.
@@ -16,7 +16,7 @@ If for some reason you don't want overwrite the existing application files 'cont
 ### CONFIGURATION
 To configure the plugin, edit the config.php file at the root of your application directory.
 
-Define the authentication mode
+##### Define the authentication class to use
 ```
 // config.php
 ...
@@ -28,7 +28,7 @@ const AUTHENTICATION_CLASS = 'authentication/BasicAuthentication/BasicAuthentica
 
 ```
 
-Define the user provider
+##### Define the user provider class to use
 ```
 // config.php
 ...
@@ -40,7 +40,7 @@ const USER_PROVIDER_CLASS = 'provider/DbUserProvider/DbUserProvider';
 
 ```
 
-Configure the user provider
+##### Configure the user provider
 ```
 // config.php
 ..
@@ -73,3 +73,140 @@ const DB_USER_PROVIDER_USER_ATTRIBUTES_MAPPING = array(
 );
 
 ```
+
+### DEVELOPERS
+If you want develop your own authentication or user provider library follow these instructions
+
+##### Authentication
+###### Create a Authentication class
+Create a directory in application/libraries that will contain your Authentication class. Your class need implements AuthenticationInterface.
+```
+<?php
+// application/libraries/MyAuthentication/MyAuthentication.php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+Class MyAuthentication implements AuthenticationInterface {
+
+    /**
+     * Called for user authentication
+     * Return null if form not submitted, FALSE if authentication failure, the username when authentication success
+     * @return bool|null|String
+     */
+    public function login()
+    {
+        // TODO: Implement login() method.
+    }
+
+    /**
+     * Called for user logout
+     * @return null
+     */
+    public function logout()
+    {
+        // TODO: Implement logout() method.
+    }
+
+    /**
+     * Called when authentication success
+     * @return null
+     */
+    public function on_authentication_failure()
+    {
+        // TODO: Implement on_authentication_failure() method.
+    }
+
+    /**
+     * Called when authentication failure
+     * @return mixed
+     */
+    public function on_authentication_success()
+    {
+        // TODO: Implement on_authentication_success() method.
+    }
+}
+```
+Your class will used by Authentication controller for login/logout users on your platform.
+
+###### Use your Authentication class
+```
+// config.php
+...
+const AUTHENTICATION_CLASS = 'authentication/MyAuthentication/MyAuthentication';
+
+```
+
+##### User Provider
+###### Create a UserProvider class
+Create a directory in application/libraries that will contain your UserProvider class. Your class need implements UserProviderInterface
+```
+<?php
+// application/libraries/MyUserProvider/MyUserProvider.php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+Class MyUserProvider implements UserProviderInterface {
+
+    /**
+     * Load the user properties by username
+     * @param $username
+     * @return UserInterface
+     */
+    public function loadUserByUsername($username)
+    {
+        // TODO: Implement loadUserByUsername() method.
+    }
+}
+```
+The loadUserByUsername in your class will be called after user has logged in to get his attributes. This method must return an instance of UserInterface, so... 
+
+###### Create a User class
+In your directory, create a User class which must implements UserInterface.
+```
+<?php
+// application/libraries/MyUserProvider/MyUser.php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+Class MyUser implements UserInterface {
+    protected $id;
+    protected $username;
+    protected $email;
+    protected $role;
+
+    /**
+     * Get user id
+     * @return mixed
+     */
+    public function getId()
+    {
+        // TODO: Implement getId() method.
+    }
+
+    /**
+     * Get username
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    /**
+     * Get user email
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        // TODO: Implement getEmail() method.
+    }
+
+    /**
+     * Get user role slug
+     * @return mixed
+     */
+    public function getRole()
+    {
+        // TODO: Implement getRole() method.
+    }
+}
+```
+This class will be used by Authentication controller to set user data in session.
