@@ -211,5 +211,11 @@ Class MyUser implements UserInterface {
 ```
 This class will be used by Authentication controller to set user data in session.
 
+###### Use your UerProvider class
+```
+// config.php
+...
+const USER_PROVIDER_CLASS = 'provider/MyUserProvider/MyUserProvider';
+
 ### REPORT AN ISSUE
 Send me an email to frederic.casazza@unice.fr
