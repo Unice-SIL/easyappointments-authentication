@@ -19,7 +19,9 @@ Class DbUserProvider implements UserProviderInterface {
         'username'      => 'username',
         'id'            => 'user_id',
         'email'         => 'user_email',
-        'role_slug'     => 'role_slug'
+        'role_slug'     => 'role_slug',
+        'first_name'    => 'first_name',
+        'last_name'     => 'last_name'
     );
 
     /**

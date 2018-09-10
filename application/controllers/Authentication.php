@@ -65,6 +65,8 @@ Class Authentication extends CI_Controller {
         $this->session->set_userdata('user_email', $user->getEmail());
         $this->session->set_userdata('role_slug', $user->getRole());
         $this->session->set_userdata('username', $user->getUsername());
+        $this->session->set_userdata('first_name', $user->getFirstName());
+        $this->session->set_userdata('last_name', $user->getLastName());
     }
 
     /**
@@ -76,6 +78,8 @@ Class Authentication extends CI_Controller {
         $this->session->unset_userdata('role_slug');
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('dest_url');
+        $this->session->unset_userdata('first_name');
+        $this->session->unset_userdata('last_name');
     }
 
     /**
@@ -88,7 +92,7 @@ Class Authentication extends CI_Controller {
     }
 
     /**
-     * Display the login page.
+     * @return mixed
      */
     public function login() {
         $username = $this->authentication->login();

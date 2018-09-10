@@ -11,6 +11,8 @@ class User implements UserInterface {
     protected $username;
     protected $email;
     protected $role;
+    protected $first_name;
+    protected $last_name;
 
     /**
      * User constructor.
@@ -61,5 +63,21 @@ class User implements UserInterface {
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Get the user first name
+     * @return mixed
+     */
+    public function getFirstName(){
+        return $this->first_name;
+    }
+
+    /**
+     * Get the user laste name
+     * @return mixed
+     */
+    public function getLastName(){
+        return $this->last_name;
     }
 }
